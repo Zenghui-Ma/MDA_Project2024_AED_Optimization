@@ -62,8 +62,8 @@ app.layout = dbc.Container(
                         dcc.Checklist(
                             options=[
                                 {'label': 'Existing AED Locations', 'value': 'AED'},
+                                {'label': 'Patients', 'value': 'patient'},
                                 {'label': 'New AED Placement', 'value': 'newAED'},
-                                {'label': 'Intervention', 'value': 'NEW_INTERVENTION'},
                             ],
                             value=[],
                             id='show-aed-hospital-checklist',
@@ -154,6 +154,10 @@ def update_aed_locations(click_data, checklist_values, stored_coordinates):
     if 'AED' in checklist_values:
         aed_data = aed_location_existed.read_aed_data()
         aed_markers = aed_location_existed.generate_aed_markers(aed_data)
+        base_layers += aed_markers
+    if 'patient' in checklist_values:
+        patient_data =aed_location_existed.read_patient_data()
+        aed_markers = aed_location_existed.generate_patient_markers(patient_data)
         base_layers += aed_markers
 
     # Add new AED location if map is clicked and 'newAED' is selected
