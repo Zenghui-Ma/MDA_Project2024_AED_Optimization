@@ -4,7 +4,7 @@ import os
 import dash
 
 # 读取AED位置数据
-def read_aed_data(file_path='data/AED_locations.xlsx'):
+def read_aed_data(file_path='data/AED_locations_ThreeCity.xlsx'):
     # 获取当前工作目录
     base_dir = os.getcwd()
     # 拼接相对路径，得到文件的绝对路径
