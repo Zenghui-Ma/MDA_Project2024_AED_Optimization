@@ -31,7 +31,7 @@ def generate_aed_markers(data):
         markers.append(marker)
     return markers
 
-def read_patient_data(file_path='data/citycombined_intervention_data.xlsx'):
+def read_patient_data(file_path='data/patients_combined.xlsx'):
     # 获取当前工作目录
     base_dir = os.getcwd()
     # 拼接相对路径，得到文件的绝对路径
@@ -50,12 +50,12 @@ def generate_patient_markers(data):
     markers = []
     for _, row in data.iterrows():
         # 根据 target 列的值选择图标颜色
-        if row['target'] == 0:
+        if row['Mortality'] == 0:
             icon_url = "/assets/green_person.png"  # 绿色圈的图标文件路径
-        elif row['target'] == 1:
+        elif row['Mortality'] == 1:
             icon_url = "/assets/red_person.png"  # 红色圈的图标文件路径
         else:
-            continue  # 如果 target 不是 0 或 1，则跳过该行
+            continue  # 如果 Mortality 不是 0 或 1，则跳过该行
 
         # 创建标记
         marker = dl.Marker(
