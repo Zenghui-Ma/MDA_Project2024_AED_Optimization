@@ -1,0 +1,25 @@
+/* 滑动条背景 */
+.rc-slider {
+    background-color: #E2F0D9; /* 滑动条背景颜色 */
+    border: 1px solid #488A99; /* 滑动条边框颜色 */
+    height: 10px; /* 滑动条高度 */
+    border-radius: 5px; /* 滑动条圆角 */
+}
+
+/* 滑块样式 */
+.rc-slider-handle {
+    background-color: #488A99; /* 滑块颜色 */
+    border: 1px solid #488A99; /* 滑块边框颜色 */
+    width: 20px; /* 滑块宽度 */
+    height: 20px; /* 滑块高度 */
+    margin-top: -6px; /* 调整滑块位置，使其居中 */
+    border-radius: 50%; /* 滑块圆角 */
+}
+
+/* 标记样式 */
+.rc-slider-mark-text {
+    color: #488A99; /* 标记颜色 */
+    font-size: 12px; /* 标记字体大小 */
+    font-family: 'Gill Sans', sans-serif; /* 标记字体 */
+    white-space: nowrap; /* 防止换行 */
+}
