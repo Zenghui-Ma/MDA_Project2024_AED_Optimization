@@ -5,28 +5,24 @@ import json
 import pandas as pd
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
+import joblib
 
 # Import self-defined function
 import aed_location_existed
+from update_survival_probabilities import update_distance_to_aed, update_patient_survival_probabilities, generate_patient_tooltips_with_probability, model
+
 
 app = Dash(__name__,
            external_stylesheets=[dbc.themes.VAPOR],  # set the theme of the project
            title='MDA Project-AED Location Optimization',
            use_pages=True,
+           pages_folder="",  # 禁用 pages 文件夹
            suppress_callback_exceptions=True)
 server = app.server
 
-# Initialize months for the slider
-months = [
-    "2022-06", "2022-07", "2022-08", "2022-09", "2022-10",
-    "2022-11", "2022-12", "2023-01", "2023-02", "2023-03",
-    "2023-04", "2023-05"
-]
-marks = {i: month for i, month in enumerate(months)}
-
 # Define CSS styles for the slider marks
 mark_style = {
-    'color': '#488A99',  # Change the mark color
+    'color': '#f5f5f5',  # Change the mark color
     'fontSize': '16px',  # Change the mark font size
     'fontFamily': 'Gill Sans, sans-serif',  # Change the mark font family
 }
@@ -94,35 +90,24 @@ app.layout = dbc.Container(
                 width=12
             )
         ),
-        dbc.Row(
-            dbc.Col(
-                html.Div(
-                    dcc.Slider(
-                        min=0,
-                        max=len(months) - 1,
-                        step=1,
-                        value=0,
-                        marks={i: {'label': month, 'style': mark_style} for i, month in enumerate(months)},
-                        included=True,
-                        updatemode='drag',
-                        vertical=False
-                    ),
-                    style={'width': '60%'}
-                ),
-                width=12
-            )
-        ),
+        
         # 4 slide bar
         dbc.Row(
             dbc.Col(
                 html.Div([
                     dcc.Textarea(
-                        id='textarea-patient-description',
+                        id='textarea-patient-discription',
                         value='Textarea content initialized\nwith multiple lines of text',
                         style={'width': '100%', 'height': 300},
                     ),
                     html.Div(id='textarea-patient-discription-output', style={'whiteSpace': 'pre-line'})
                 ]),
+            )
+        ),
+        dbc.Row(
+            dbc.Col(
+                dcc.Store(id='store-coordinates', data=[]),
+                width=12
             )
         )
     ],
@@ -138,14 +123,13 @@ app.layout = dbc.Container(
     State('store-coordinates', 'data'),
     prevent_initial_call=True
 )
+
+
 def update_aed_locations(click_data, checklist_values, stored_coordinates):
     ctx = callback_context
     triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
-
+    
     base_layers = [dl.TileLayer()]
-    # 如果 stored_coordinates 是 None，则初始化为空列表
-    if stored_coordinates is None:
-        stored_coordinates = []
 
     # Display existing AED locations if the checklist value is selected
     if 'AED' in checklist_values:
@@ -173,6 +157,30 @@ def update_aed_locations(click_data, checklist_values, stored_coordinates):
         stored_coordinates.append({'lat': lat, 'lng': lon})
         base_layers.append(new_marker)
 
+
+    # 重新计算所有患者的生存概率
+    if 'newAED' in checklist_values and stored_coordinates:
+        # 获取所有 AED 位置
+        aed_locations = [(coord['lat'], coord['lng']) for coord in stored_coordinates]
+        patients_df = aed_location_existed.read_patient_data()  # 加载患者数据
+        
+        # 更新患者的 distance_to_aed 列
+        patients_df = update_distance_to_aed(patients_df, aed_locations)
+
+        # 计算患者的生存概率
+        patients_df = update_patient_survival_probabilities(patients_df, model)
+
+        # 添加或更新患者的 Tooltip 到地图上
+        patient_tooltips = generate_patient_tooltips_with_probability(patients_df)
+        for lat, lon, tooltip in patient_tooltips:
+            for marker in base_layers:
+                if isinstance(marker, dl.Marker) and marker.position == [lat, lon]:
+                    if marker.children is None:
+                        marker.children = []
+                    marker.children.append(tooltip)
+                    break
+
+
     # Add previously stored coordinates for new AED locations
     if 'newAED' in checklist_values:
         for coord in stored_coordinates:
@@ -188,23 +196,6 @@ def update_aed_locations(click_data, checklist_values, stored_coordinates):
         stored_coordinates = []
 
     return base_layers, stored_coordinates
-
-
-@app.callback(
-    Output('textarea-patient-description', 'value'),
-    Input('store-coordinates', 'data'),
-    prevent_initial_call=True
-)
-def update_textarea_content(stored_coordinates):
-    if not stored_coordinates:
-        raise PreventUpdate
-
-    description = "New AED Locations:\n"
-    for i, coord in enumerate(stored_coordinates):
-        description += f"{i + 1}. Latitude: {coord['lat']}, Longitude: {coord['lng']}\n"
-
-    return description
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)
