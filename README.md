@@ -6,4 +6,8 @@ In this project, a machine learning model was built to predict survival rates fo
 The app has been deployed on Heroko, users can simply access the APP via the link below:
 
 ### Local Installment
-Alternatively, users can access the app locally. Please first clone the repository and open the files, and then run the command below to install all the required packages listed in 'requirements.txt'.
+Alternatively, users can access the app locally. Please first clone the repository and open the files, and then run the command below to install all the required packages listed in `requirements.txt`.
+```
+python -m pip install -r requirements.txt
+```
+# Repository Structure
