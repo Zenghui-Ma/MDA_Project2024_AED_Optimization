@@ -9,7 +9,7 @@ from xgboost import XGBClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, roc_auc_score
 import joblib
-<<<<<<< HEAD
+
 
 # 假设patients是你的DataFrame
 patients = pd.read_excel('data/patients_combined.xlsx')
@@ -17,11 +17,9 @@ patients = pd.read_excel('data/patients_combined.xlsx')
 # 将事件类型和时间等特征转化为合适的格式
 patients['time'] = patients['time'].str[:8]
 patients['time'] = pd.to_datetime(patients['time'], format='%H:%M:%S').dt.hour
-=======
+
 import datetime
 import time
-
-print("Script started")
 
 
 intervention = pd.read_excel('data/intervention_all.xlsx')
@@ -146,7 +144,7 @@ patients = pd.read_excel('data/patients.xlsx')
 patients['time'] = patients['time'].str[:8]
 patients['time'] = pd.to_datetime(patients['time'], format='%H:%M:%S').dt.hour
 patients.to_excel('data/patients.xlsx')
->>>>>>> a77a5a4788b8c0485012dea46a31ca23c9464aeb
+
 
 # 选择特征和标签
 key_cols = ['Postal_code', 'latitude', 'longitude', 'EventLevel Trip', 
@@ -204,8 +202,4 @@ best_score = grid_search.best_score_
 
 print(f'Best Parameters: {best_params}')
 print(f'Best ROC AUC Score: {best_score}')
-<<<<<<< HEAD
-=======
 
-print("Script finished")
->>>>>>> a77a5a4788b8c0485012dea46a31ca23c9464aeb
