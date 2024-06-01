@@ -7,8 +7,8 @@ import pandas as pd
 app = dash.Dash(__name__)
 
 # Read Excel data
-file_path = "/Users/zenghui/Zenghui_Ma/KU Leuven/2023-2024/Term 2/Modern Data Analytics/Project/dashboard/all_stats.xlsx"
-df = pd.read_excel(file_path)
+file_path = '/Users/shuting/Desktop/mda/group project/mda-app'
+df = pd.read_excel("3_city_case_death.xlsx")
 
 # Convert 'Month' column to datetime format
 df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m')
