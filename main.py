@@ -1,5 +1,6 @@
 import dash
 from dash import dcc, html
+from layout import create_top_bar, placeholder
 
 # 初始化Dash应用
 app = dash.Dash(__name__)
@@ -9,31 +10,8 @@ app.layout = html.Div(
     style={'fontFamily': 'Arial', 'padding': '0', 'margin': '0'},
     children=[
         # Top blue bar
-        html.Div(
-            style={
-                'backgroundColor': '#1C4E80', 
-                'color': 'white', 
-                'padding': '10px 0', 
-                'display': 'flex', 
-                'justifyContent': 'center',
-                'alignItems': 'center',
-                'width': '100%',
-                'position': 'fixed',
-                'top': '0',
-                'zIndex': '1000'
-            },
-            children=[
-                html.Div(
-                    style={'fontSize': '24px', 'fontWeight': 'bold'},
-                    children='AED Location Analytics'
-                ),
-                html.Div(
-                    style={'fontSize': '16px', 'position': 'absolute', 'right': '10px'},
-                    children='Group of CHINA'
-                )
-            ]
-        ),
-        html.Div(style={'height': '60px'}),  # Placeholder to push content below fixed header
+        create_top_bar('AED Location Analytics'),
+        placeholder,
 
         # Main content divided into four parts
         html.Div(
@@ -62,9 +40,9 @@ app.layout = html.Div(
                     style={'border': '1px solid #ccc', 'textAlign': 'center', 'height': '400px'},
                     children=[
                         html.A(
-                            href='http://localhost:8052',
+                            href='http://localhost:8053',
                             children=[
-                                html.Img(src='/assets/chart2.png', style={'width': '100%', 'height': '100%', 'objectFit': 'cover'}),
+                                html.Img(src='/assets/page1.png', style={'width': '100%', 'height': '100%', 'objectFit': 'cover'}),
                                 html.P('Visitors')
                             ]
                         )
@@ -74,9 +52,9 @@ app.layout = html.Div(
                     style={'border': '1px solid #ccc', 'textAlign': 'center', 'height': '400px'},
                     children=[
                         html.A(
-                            href='http://localhost:8003',
+                            href='http://localhost:8052',
                             children=[
-                                html.Img(src='/assets/chart3.png', style={'width': '100%', 'height': '100%', 'objectFit': 'cover'}),
+                                html.Img(src='/assets/page2.png', style={'width': '100%', 'height': '100%', 'objectFit': 'cover'}),
                                 html.P('Pages/Visitors')
                             ]
                         )
