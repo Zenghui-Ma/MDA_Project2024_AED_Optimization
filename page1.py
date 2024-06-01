@@ -2,13 +2,13 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.graph_objects as go
 import pandas as pd
+from layout import create_top_bar, placeholder
 
 # 创建 Dash 应用
 app = dash.Dash(__name__)
 
 # 读取 Excel 数据
-file_path = '/Users/shuting/Desktop/mda/group project/mda-app'
-df = pd.read_excel("3_city_case_death.xlsx")
+df = pd.read_excel("data/3_city_case_death.xlsx")
 
 # 将 'Month' 列转换为日期格式
 df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m')
@@ -25,8 +25,12 @@ mark_style = {
 }
 
 # 定义 Dash 应用布局
-app.layout = html.Div(children=[
-    html.H1(children='AED Mortality Rate Analysis by Different Cities and Month'),
+app.layout = html.Div(
+    style={'fontFamily': 'Arial', 'padding': '0', 'margin': '0'},
+    children=[
+        # Top blue bar
+        create_top_bar('AED Mortality Rate Analysis by Different Cities and Month'),
+        placeholder,
 
     html.Div(
         dcc.Slider(

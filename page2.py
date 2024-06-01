@@ -2,13 +2,13 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.graph_objects as go
 import pandas as pd
+from layout import create_top_bar, placeholder
 
 # Create Dash application
 app = dash.Dash(__name__)
 
 # Read Excel data
-file_path = '/Users/shuting/Desktop/mda/group project/mda-app'
-df = pd.read_excel("3_city_case_death.xlsx")
+df = pd.read_excel("data/3_city_case_death.xlsx")
 
 # Convert 'Month' column to datetime format
 df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m')
@@ -17,8 +17,13 @@ df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m')
 cities = df['City'].unique()
 
 # Define Dash application layout
-app.layout = html.Div(children=[
-    html.H1(children='AED Mortality Rate Analysis by Different Years and Cities'),
+app.layout = html.Div(
+    style={'fontFamily': 'Arial', 'padding': '0', 'margin': '0',
+           'backgroundColor': 'rgba(245, 245, 245, 1)'},
+    children=[
+        # Top blue bar
+        create_top_bar('AED Mortality Rate Analysis by Different Years and Cities'),
+        placeholder,
     
     html.Div(
         dcc.Dropdown(

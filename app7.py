@@ -10,7 +10,7 @@ import joblib
 # Import self-defined function
 import aed_location_existed
 from update_survival_probabilities import update_distance_to_aed, update_patient_survival_probabilities, generate_patient_tooltips_with_probability, model
-
+from layout import create_top_bar, placeholder
 
 app = Dash(__name__,
            external_stylesheets=[dbc.themes.BOOTSTRAP],  # set the theme of the project
@@ -24,16 +24,13 @@ server = app.server
 initial_patients_df = pd.DataFrame(columns=['index', 'latitude', 'longitude'])
 
 # Set layout
+# 定义应用的布局
 app.layout = dbc.Container(
     [
-        # 1 Set the title of the project
-        dbc.Row(
-            dbc.Col(
-                html.H1("AED Optimization for Better Survival", style={'text-align': 'center', 'color': 'black'}),
-                width=12
-            ),
-            style={'position': 'relative', 'z-index': '1'}
-        ),
+        # 调用 create_top_bar 函数
+        create_top_bar('AED Optimization for Better Survival'),
+        placeholder,
+
         # 2. Main content with map and sidebar
         dbc.Row(
             [
@@ -43,10 +40,11 @@ app.layout = dbc.Container(
                         children=[dl.TileLayer()],
                         center=[50.8503, 4.3517],
                         zoom=12.5,
-                        style={'width': '100%', 'height': '90vh', 'padding': '10px',
-                               'margin-left': '10px', 'margin-bottom': '10px'}
+                        style={'width': '100%', 'height': '90vh'}
                     ),
-                    width=9
+                    width=9,
+                    style={'padding-left': '10px', 'padding-right': '0',
+                           'margin-top': '5px',}  # 调整左侧和右侧内边距
                 ),
                 dbc.Col(
                     html.Div(
@@ -55,7 +53,7 @@ app.layout = dbc.Container(
                                 options=[
                                     {'label': '  Existing AED Locations', 'value': 'AED'},
                                     {'label': '  Patients', 'value': 'patient'},
-									{'label': '  Hospitals', 'value': 'hospital'},
+                                    {'label': '  Hospitals', 'value': 'hospital'},
                                     {'label': '  New AED Placement', 'value': 'newAED'},
                                 ],
                                 value=[],
@@ -64,6 +62,7 @@ app.layout = dbc.Container(
                                     'color': '#7b7b7b',  # Change text color
                                     'fontSize': '18px',  # Change font size
                                     'fontFamily': 'Gill Sans, sans-serif',  # Change font family
+                                    'margin-bottom': '5px',
                                     'margin-bottom': '30px',
                                     'line-height': '2'
                                 },
@@ -89,14 +88,16 @@ app.layout = dbc.Container(
                             html.Div(id='textarea-patient-discription-output', style={'whiteSpace': 'pre-line'})
                         ],
                         style={
-                            'background-color': 'rgba(255, 255, 255, 0.8)',
+                            'margin-bottom': '5px',
+                            'background-color': 'rgba(245, 245, 245, 1)',
                             'padding': '10px',
                             'border-radius': '10px',
-                            'height': '100vh',
+                            'height': '90vh',
                             'overflow-y': 'auto'
                         }
                     ),
-                    width=3
+                    width=3,
+                    style={'padding-right': '20px', 'margin-top': '5px'}  # 调整右侧内边距和外边距
                 )
             ]
         ),
@@ -109,8 +110,9 @@ app.layout = dbc.Container(
             )
         )
     ],
-    fluid=False
+    fluid=True
 )
+
 
 # Callback to display existing AED locations and handle new AED placements
 @app.callback(
