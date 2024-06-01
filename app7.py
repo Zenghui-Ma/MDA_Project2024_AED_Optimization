@@ -59,12 +59,13 @@ app.layout = dbc.Container(
                                 value=[],
                                 id='show-aed-hospital-checklist',
                                 style={
-                                    'color': '#7b7b7b',  # Change text color
-                                    'fontSize': '18px',  # Change font size
-                                    'fontFamily': 'Gill Sans, sans-serif',  # Change font family
-                                    'margin-bottom': '5px',
-                                    'margin-bottom': '30px',
-                                    'line-height': '2'
+                                    'color': '#1C4E80',  # Change text color
+                                    'fontSize': '20px',  # Change font size
+                                    'fontFamily': 'Arial',  # Change font family
+                                    'margin-top': '10px',
+                                    'margin-bottom': '40px',
+                                    'padding-left': '10px',
+                                    'line-height': '2.5'
                                 },
                                 inputStyle={
                                     'margin-right': '10px',  # Add space between checkbox and label
@@ -74,13 +75,15 @@ app.layout = dbc.Container(
                             html.Div(
                                 dcc.Textarea(
                                     id='textarea-patient-description',
-                                    value='Textarea content initialized\nwith multiple lines of text',
+                                    value='Text Area: \n If you add new AED on the map, there will be the accurate postion',
                                     style={
                                         'width': '100%', 
-                                        'height': '450px',
-                                        'color': '#7b7b7b',  # Match text color
+                                        'height': '780px',
+                                        'color': '#1C4E80',  # Match text color
                                         'fontSize': '18px',  # Match font size
-                                        'fontFamily': 'Gill Sans, sans-serif',  # Match font family
+                                        'fontFamily': 'Arial',  # Match font family
+                                        'border-radius': '10px',
+                                        'padding': '10px',
                                     },
                                 ),
                                 style={'margin-top': '20px'}

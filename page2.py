@@ -2,10 +2,11 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.graph_objects as go
 import pandas as pd
+import dash_bootstrap_components as dbc
 from layout import create_top_bar, placeholder
 
 # Create Dash application
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # Read Excel data
 df = pd.read_excel("data/3_city_case_death.xlsx")
@@ -18,36 +19,59 @@ cities = df['City'].unique()
 
 # Define Dash application layout
 app.layout = html.Div(
-    style={'fontFamily': 'Arial', 'padding': '0', 'margin': '0',
-           'backgroundColor': 'rgba(245, 245, 245, 1)'},
+    style={'fontFamily': 'Arial', 'padding': '0', 'margin': '0', 'minHeight': '100vh', 'backgroundColor': 'rgba(245, 245, 245, 1)'},
     children=[
-        # Top blue bar
+        # 顶部蓝色栏
         create_top_bar('AED Mortality Rate Analysis by Different Years and Cities'),
         placeholder,
-    
-    html.Div(
-        dcc.Dropdown(
-            id='year-dropdown',
-            options=[{'label': str(year), 'value': year} for year in df['Month'].dt.year.unique()],
-            value=2022  # Set the initial value to 2022
-        ),
-        style={'width': '200px', 'margin-top': '10px', 'margin-bottom': '20px'}  # Adjust the width and alignment of the dropdown
-    ),
 
-    html.Div(
-        dcc.Dropdown(
-            id='city-dropdown',
-            options=[{'label': city, 'value': city} for city in cities],
-            value='Brussels'  # Set the initial city
-        ),
-        style={'width': '200px', 'margin-top': '10px', 'margin-bottom': '20px'}  # Adjust the width and alignment of the dropdown
-    ),
+        html.Div(
+            style={'width': '90%', 'margin': 'auto', 'padding': '40px', 'backgroundColor': 'rgba(245, 245, 245, 1)'},
+            children=[
+                # 水平排列的下拉选择框
+                html.Div(
+                    style={'display': 'flex', 'alignItems': 'center', 'marginBottom': '20px', 'padding-left': '20px'},
+                    children=[
+                        html.Div(
+                            style={'display': 'flex', 'alignItems': 'center', 'marginRight': '20px'},
+                            children=[
+                                html.Label('Year :', style={'marginRight': '20px', 'fontFamily': 'Arial', 
+                                                            'fontSize': '20px', 'color': '#7E909A'}),
+                                dcc.Dropdown(
+                                    id='year-dropdown',
+                                    options=[{'label': str(year), 'value': year} for year in df['Month'].dt.year.unique()],
+                                    value=2022,  # 设置初始值为2022
+                                    style={'width': '150px',
+                                           'fontSize': '20px'}  # 设置选择框宽度
+                                ),
+                            ]
+                        ),
+                        html.Div(
+                            style={'display': 'flex', 'alignItems': 'center'},
+                            children=[
+                                html.Label('City :', style={'marginRight': '20px', 'fontFamily': 'Arial', 
+                                                            'fontSize': '20px', 'color': '#7E909A'}),
+                                dcc.Dropdown(
+                                    id='city-dropdown',
+                                    options=[{'label': city, 'value': city} for city in cities],
+                                    value='Brussels',  # 设置初始城市
+                                    style={'width': '150px',
+                                           'fontSize': '20px'}  # 设置选择框宽度
+                                ),
+                            ]
+                        ),
+                    ]
+                ),
 
-    dcc.Graph(
-        id='monthly-data-graph',
-        style={'width': '80vw', 'height': '70vh'}  # Set the width and height of the graph
-    )
-])
+                dcc.Graph(
+                    id='monthly-data-graph',
+                    style={'width': '80vw', 'height': '70vh'}  # 设置图表的宽度和高度
+                )
+            ]
+        ),
+    ]
+)
+
 
 # Set callback function to update the graph data based on selected year and city
 @app.callback(
@@ -73,7 +97,7 @@ def update_figure(selected_year, selected_city):
         x=months, 
         y=total_cases,
         name='Total Cases',
-        marker_color='rgb(55, 83, 109)',
+        marker_color='#1C4E80',
         text=total_cases,
         textposition='auto'
     ))
@@ -101,16 +125,20 @@ def update_figure(selected_year, selected_city):
 
     # Update the layout of the chart
     fig.update_layout(
-        title=f'Total Cases and Death Count in {selected_city} for {selected_year}',
+        title=dict(
+        text=f'Total Cases and Death Count in {selected_city} for {selected_year}',
+        font=dict(size=20)  # Adjust the size as needed
+    ),
         xaxis=dict(
             tickmode='array',
             tickvals=months,  # Only display month labels
-            tickformat='%Y-%m'
+            tickformat='%Y-%m',
+            tickfont=dict(size=18)
         ),
         yaxis=dict(
             title='Count',
-            titlefont=dict(size=14),
-            tickfont=dict(size=12),
+            titlefont=dict(size=18),
+            tickfont=dict(size=14),
             gridcolor='rgba(200, 200, 200, 0.5)'
         ),
         yaxis2=dict(
@@ -118,8 +146,8 @@ def update_figure(selected_year, selected_city):
             overlaying='y',
             side='right',
             tickformat='.1f',  # Ensure the secondary y-axis shows correct format
-            titlefont=dict(size=14),
-            tickfont=dict(size=12),
+            titlefont=dict(size=18),
+            tickfont=dict(size=14),
             showgrid=False  # Hide the grid for the secondary y-axis
         ),
         barmode='group',  # Group the bar charts
@@ -133,7 +161,8 @@ def update_figure(selected_year, selected_city):
             yanchor='top',
             bgcolor='rgba(255, 255, 255, 0.5)',
             bordercolor='rgba(0, 0, 0, 0.5)',
-            borderwidth=1
+            borderwidth=1,
+            font=dict(size=14)
         )
     )
 
