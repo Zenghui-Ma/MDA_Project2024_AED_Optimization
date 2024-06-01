@@ -4,6 +4,7 @@ In this project, a machine learning model was built to predict survival rates fo
 ## Usage
 ### Remote Access
 The app has been deployed on Heroko, users can simply access the APP via the link below:
+https://mda2024china-e56238198fd9.herokuapp.com
 
 ### Local Installment
 Alternatively, users can access the app locally. Please first clone the repository and open the files, and then run the command below to install all the required packages listed in `requirements.txt`.
