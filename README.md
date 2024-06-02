@@ -23,7 +23,7 @@ python -m pip install -r requirements.txt
 ├── deploy           # deployment files
 ├── model            # prediction model files
 ├── pages            # web application files
-├── preprocess       # pre-processing and model-building files
+├── preprocess       # pre-processing files
 ├── README.md        # readme file
 └── requirement.txt  # requirement file 
 ```
