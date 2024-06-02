@@ -11,7 +11,7 @@ app.layout = html.Div(
     style={'fontFamily': 'Arial', 'padding': '0', 'margin': '0', 'color': '#1C4E80'},
     children=[
         # Top blue bar
-        create_top_bar('AED Location Analytics'),
+        create_top_bar('AED Optimization Project'),
         placeholder,
         # Main content divided into four parts
         html.Div(

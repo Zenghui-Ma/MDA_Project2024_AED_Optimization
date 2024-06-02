@@ -5,7 +5,11 @@ In this project, a machine learning model was built to predict survival rates fo
 ### Remote Access
 The app has been deployed on Heroko, users can simply access the APP via the link below:
 
-[https://mda2024china-e56238198fd9.herokuapp.com](https://mda2024china-e56238198fd9.herokuapp.com)
+[https://mdamainpage-26dd5ba1b110.herokuapp.com](https://mdamainpage-26dd5ba1b110.herokuapp.com)
+
+or via this QR code:
+
+![QR Code](assets/heroku_app_qr.png)
 
 
 ### Local Installment

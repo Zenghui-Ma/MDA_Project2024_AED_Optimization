@@ -7,6 +7,7 @@ from layout import create_top_bar, placeholder
 
 # Create Dash application
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server  # Flask instance
 
 # Read Excel data
 df = pd.read_excel("data/3_city_case_death.xlsx")
