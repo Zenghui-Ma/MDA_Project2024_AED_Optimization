@@ -17,6 +17,6 @@ qr.make(fit=True)
 img = qr.make_image(fill_color="black", back_color="white")
 
 # Save the image
-img.save("assets/heroku_app_qr.png")
+img.save("pages/assets/heroku_app_qr.png")
 
 print("QR code generated and saved as heroku_app_qr.png")

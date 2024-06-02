@@ -7,7 +7,7 @@ from geopy.distance import geodesic
 from aed_location_existed import read_patient_data, read_aed_data
 
 # 加载保存的模型流水线
-model = joblib.load('aed_survival_pipeline.pkl')
+model = joblib.load('model/aed_survival_pipeline.pkl')
 
 def update_distance_to_aed(patients_df, aed_locations):
     """

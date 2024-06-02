@@ -1,1 +1,0 @@
-web: gunicorn app7:server

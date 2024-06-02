@@ -9,7 +9,7 @@ The app has been deployed on Heroko, users can simply access the APP via the lin
 
 or via this QR code:
 
-![QR Code](assets/heroku_app_qr.png)
+![QR Code](/pages/assets/heroku_app_qr.png)
 
 
 ### Local Installment

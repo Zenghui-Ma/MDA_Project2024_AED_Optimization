@@ -8,7 +8,7 @@ from dash.exceptions import PreventUpdate
 import joblib
 
 # Import self-defined function
-import aed_location_existed
+import aed_location_existed as aed_location_existed
 from update_survival_probabilities import update_distance_to_aed, update_patient_survival_probabilities, generate_patient_tooltips_with_probability, model
 from layout import create_top_bar, placeholder
 

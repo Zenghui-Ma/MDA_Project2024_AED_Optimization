@@ -25,7 +25,7 @@ def generate_aed_markers(data):
         marker = dl.Marker(
             position=[row['latitude'], row['longitude']],
             icon={
-                "iconUrl": "/assets/aed_old.png",  # Ensure aed_icon.png is located in the assets folder
+                "iconUrl": 'assets/aed_old.png',  # Ensure aed_icon.png is located in the assets folder
                 "iconSize": [21, 21],  # Icon size
                 "iconAnchor": [12, 41],  # Icon anchor point
                 "popupAnchor": [1, -34],  # Popup anchor point
