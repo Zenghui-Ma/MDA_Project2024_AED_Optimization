@@ -18,7 +18,7 @@ Alternatively, users can access the app locally. Please first clone the reposito
 python -m pip install -r requirements.txt
 ```
 ## Repository Structure
-.
+```
 ├── CSS
 ├── __pycache__
 │   ├── aed_location_existed.cpython-310.pyc
@@ -57,3 +57,4 @@ python -m pip install -r requirements.txt
 └── test.ipynb
 
 9 directories, 28 files
+```
