@@ -19,11 +19,29 @@ python -m pip install -r requirements.txt
 ```
 ## Repository Structure
 ```
-├── data             # data files
-├── deploy           # deployment files
-├── model            # prediction model files
-├── pages            # web application files
-├── preprocess       # pre-processing files
-├── README.md        # readme file
-└── requirement.txt  # requirement file 
+MDA_Project2024_AED_Optimization/
+├── data/
+│   ├── file1
+│   ├── file2
+├── preprocess/
+│   ├── file1
+│   ├── file2
+├── model/
+│   ├── aed_survival_pipeline.pkl
+│   ├── model.py
+├── pages/
+│   ├── app7.py
+│   ├── page1.py
+│   ├── layout.py
+│   ├── page2.py
+│   ├── main.py
+│   ├── assets/
+├── deploy/
+│   ├── directory_structure.txt
+│   ├── structure.py
+│   ├── QR_code.py
+├── README.md
+├── requirements.txt
+
+
 ```
