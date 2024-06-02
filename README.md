@@ -29,7 +29,7 @@ MDA_Project2024_AED_Optimization/
 ├── deploy/                           # deployment files
 │   ├── QR_code.py
 ├── airflow/                          # airflow files
-│   ├── day.py
+│   ├── dag.py
 ├── README.md                         # readme files
 ├── requirements.txt                  # requirement files
 
