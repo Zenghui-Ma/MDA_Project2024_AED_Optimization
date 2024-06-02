@@ -16,7 +16,7 @@ app = Dash(__name__,
            external_stylesheets=[dbc.themes.BOOTSTRAP],  # set the theme of the project
            title='MDA Project-AED Location Optimization',
            use_pages=True,
-           pages_folder="",  # 禁用 pages 文件夹
+           pages_folder="", 
            suppress_callback_exceptions=True)
 server = app.server
 
@@ -24,10 +24,9 @@ server = app.server
 initial_patients_df = pd.DataFrame(columns=['index', 'latitude', 'longitude'])
 
 # Set layout
-# 定义应用的布局
 app.layout = dbc.Container(
     [
-        # 调用 create_top_bar 函数
+        # Call the create_top_bar function
         create_top_bar('AED Optimization for Better Survival'),
         placeholder,
 
@@ -44,7 +43,7 @@ app.layout = dbc.Container(
                     ),
                     width=9,
                     style={'padding-left': '10px', 'padding-right': '0',
-                           'margin-top': '5px',}  # 调整左侧和右侧内边距
+                           'margin-top': '5px',} 
                 ),
                 dbc.Col(
                     html.Div(
@@ -100,11 +99,11 @@ app.layout = dbc.Container(
                         }
                     ),
                     width=3,
-                    style={'padding-right': '20px', 'margin-top': '5px'}  # 调整右侧内边距和外边距
+                    style={'padding-right': '20px', 'margin-top': '5px'}
                 )
             ]
         ),
-        # 存储坐标值
+        # Save the coordinates
         dbc.Row(
             dbc.Col(
                 dcc.Store(id='store-coordinates'),
@@ -120,8 +119,8 @@ app.layout = dbc.Container(
 # Callback to display existing AED locations and handle new AED placements
 @app.callback(
     Output('map', 'children'),
-    Output('store-coordinates', 'data'),  # 对应回调函数stored_chidren
-    Input('map', 'clickData'),  # 对应函数里的click_data,传递到函数里
+    Output('store-coordinates', 'data'),  # Corresponds to the callback function stored_children
+    Input('map', 'clickData'),  # Corresponds to click_data in the function, passed to the function
     Input('show-aed-hospital-checklist', 'value'),
     State('store-coordinates', 'data'),
     prevent_initial_call=True
@@ -134,7 +133,7 @@ def update_aed_locations(click_data, checklist_values, stored_coordinates):
     
     base_layers = [dl.TileLayer()]
 
-    # 如果 stored_coordinates 是 None，则初始化为空列表
+  # If stored_coordinates is None, initialize it as an empty list
     if stored_coordinates is None:
         stored_coordinates = []
 
@@ -172,19 +171,19 @@ def update_aed_locations(click_data, checklist_values, stored_coordinates):
         base_layers.append(new_marker)
 
 
-    # 重新计算所有患者的生存概率
+    # Recalculate the survival probability for all patients
     if 'newAED' in checklist_values and stored_coordinates:
-        # 获取所有 AED 位置
+        # Get all AED locations
         aed_locations = [(coord['lat'], coord['lng']) for coord in stored_coordinates]
-        patients_df = aed_location_existed.read_patient_data()  # 加载患者数据
-        
-        # 更新患者的 distance_to_aed 列
+        patients_df = aed_location_existed.read_patient_data()  # Load patient data
+    
+        # Update the distance_to_aed column for patients
         patients_df = update_distance_to_aed(patients_df, aed_locations)
 
-        # 计算患者的生存概率
+        # Calculate the survival probability for patients
         patients_df = update_patient_survival_probabilities(patients_df, model)
 
-        # 添加或更新患者的 Tooltip 到地图上
+        # Add or update patient tooltips on the map
         patient_tooltips = generate_patient_tooltips_with_probability(patients_df)
         for lat, lon, tooltip in patient_tooltips:
             for marker in base_layers:
@@ -193,6 +192,7 @@ def update_aed_locations(click_data, checklist_values, stored_coordinates):
                         marker.children = []
                     marker.children.append(tooltip)
                     break
+
 
 
     # Add previously stored coordinates for new AED locations
@@ -226,11 +226,6 @@ def update_textarea_content(stored_coordinates):
         description += f"{i + 1}. Latitude: {coord['lat']}, Longitude: {coord['lng']}\n"
 
     return description
-
-
-
-
-
 
 
 if __name__ == '__main__':

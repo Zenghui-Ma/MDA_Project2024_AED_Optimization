@@ -3,10 +3,10 @@ from dash import dcc, html
 from layout import create_top_bar, placeholder
 import dash_bootstrap_components as dbc
 
-# 初始化Dash应用
+# Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# 定义应用的布局
+# Define the layout of the app
 app.layout = html.Div(
     style={'fontFamily': 'Arial', 'padding': '0', 'margin': '0', 'color': '#1C4E80'},
     children=[
@@ -66,6 +66,6 @@ app.layout = html.Div(
     ]
 )
 
-# 运行服务器并指定端口号，例如：8051
+# Run the server and specify the port number, e.g., 8051
 if __name__ == '__main__':
     app.run_server(debug=True, port=8051)

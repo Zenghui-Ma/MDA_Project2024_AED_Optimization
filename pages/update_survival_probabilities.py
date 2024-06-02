@@ -6,42 +6,42 @@ from sklearn.neighbors import BallTree
 from geopy.distance import geodesic
 from aed_location_existed import read_patient_data, read_aed_data
 
-# 加载保存的模型流水线
+# Load the saved model pipeline
 model = joblib.load('model/aed_survival_pipeline.pkl')
 
 def update_distance_to_aed(patients_df, aed_locations):
     """
-    更新患者到最近的 AED 的距离
+    Update the distance from patients to the nearest AED
     """
     if not aed_locations:
-        # 如果 aed_locations 为空，则返回原始的 patients_df
+        # If aed_locations is empty, return the original patients_df
         patients_df['distance_to_aed'] = np.nan
         return patients_df
     
-    # 创建 BallTree 以计算距离
+    # Create a BallTree to calculate distances
     aed_coords = np.radians(aed_locations)
     tree_aed = BallTree(aed_coords, metric='haversine')
     patient_coords = np.radians(patients_df[['latitude', 'longitude']])
     
     distances_aed, indices_aed = tree_aed.query(patient_coords, k=1)
-    distances_aed = distances_aed * 6371  # 转换为公里
+    distances_aed = distances_aed * 6371  # Convert to kilometers
     
     patients_df['distance_to_aed'] = distances_aed
     return patients_df
 
 def update_patient_survival_probabilities(patients_df, model):
     """
-    计算所有患者的生存概率
+    Calculate the survival probability for all patients
     """
-    # 提取这些患者的数据
+    # Extract relevant patient data
     key_cols = ['Postal_code', 'latitude', 'longitude', 'EventLevel Trip', 
                 'distance_to_center', 'distance_to_aed', 'time']
     X = patients_df[key_cols]
     print('Computing the new survival probability...')
-    non_survival_probabilities = model.predict_proba(X)[:, 0]  # 获取负类（生存）的概率
+    non_survival_probabilities = model.predict_proba(X)[:, 0]  # Get the probability of non-survival
     print('Computed.')
 
-    # 更新DataFrame中的生存概率
+    # Update the DataFrame with survival probabilities
     patients_df['Non_Survival_Probability'] = non_survival_probabilities
 
     return patients_df

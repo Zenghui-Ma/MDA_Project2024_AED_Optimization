@@ -22,42 +22,42 @@ cities = df['City'].unique()
 app.layout = html.Div(
     style={'fontFamily': 'Arial', 'padding': '0', 'margin': '0', 'minHeight': '100vh', 'backgroundColor': 'rgba(245, 245, 245, 1)'},
     children=[
-        # 顶部蓝色栏
+        # Top blue bar
         create_top_bar('AED Mortality Rate Analysis by Different Years and Cities'),
         placeholder,
 
         html.Div(
             style={'width': '90%', 'margin': 'auto', 'padding': '40px', 'backgroundColor': 'rgba(245, 245, 245, 1)'},
             children=[
-                # 水平排列的下拉选择框
+                # Horizontally arranged dropdowns
                 html.Div(
                     style={'display': 'flex', 'alignItems': 'center', 'marginBottom': '20px', 'padding-left': '20px'},
                     children=[
                         html.Div(
                             style={'display': 'flex', 'alignItems': 'center', 'marginRight': '20px'},
                             children=[
-                                html.Label('Year :', style={'marginRight': '20px', 'fontFamily': 'Arial', 
+                                html.Label('Year:', style={'marginRight': '20px', 'fontFamily': 'Arial', 
                                                             'fontSize': '20px', 'color': '#7E909A'}),
                                 dcc.Dropdown(
                                     id='year-dropdown',
                                     options=[{'label': str(year), 'value': year} for year in df['Month'].dt.year.unique()],
-                                    value=2022,  # 设置初始值为2022
+                                    value=2022,  # Set initial value to 2022
                                     style={'width': '150px',
-                                           'fontSize': '20px'}  # 设置选择框宽度
+                                           'fontSize': '20px'}  # Set the width of the dropdown
                                 ),
                             ]
                         ),
                         html.Div(
                             style={'display': 'flex', 'alignItems': 'center'},
                             children=[
-                                html.Label('City :', style={'marginRight': '20px', 'fontFamily': 'Arial', 
+                                html.Label('City:', style={'marginRight': '20px', 'fontFamily': 'Arial', 
                                                             'fontSize': '20px', 'color': '#7E909A'}),
                                 dcc.Dropdown(
                                     id='city-dropdown',
                                     options=[{'label': city, 'value': city} for city in cities],
-                                    value='Brussels',  # 设置初始城市
+                                    value='Brussels',  # Set initial city
                                     style={'width': '150px',
-                                           'fontSize': '20px'}  # 设置选择框宽度
+                                           'fontSize': '20px'}  # Set the width of the dropdown
                                 ),
                             ]
                         ),
@@ -66,13 +66,12 @@ app.layout = html.Div(
 
                 dcc.Graph(
                     id='monthly-data-graph',
-                    style={'width': '80vw', 'height': '70vh'}  # 设置图表的宽度和高度
+                    style={'width': '80vw', 'height': '70vh'}  # Set the width and height of the graph
                 )
             ]
         ),
     ]
 )
-
 
 # Set callback function to update the graph data based on selected year and city
 @app.callback(

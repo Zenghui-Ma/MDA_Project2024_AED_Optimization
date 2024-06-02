@@ -26,12 +26,12 @@ def generate_directory_structure(root_dir, prefix=''):
             structure += f'{prefix}{dir_indent} {d}\n'
     return structure
 
-# 设置根目录
+# set root directory
 root_directory = '/Users/xiaodi/Postgraduate/MDA/Maps/github_version/MDA_Project2024_AED_Optimization'
 
-# 生成目录结构
+# generate directory structure
 directory_structure = generate_directory_structure(root_directory)
 
-# 将目录结构写入文件
+# save the structure to txt
 with open('deploy/directory_structure.txt', 'w') as f:
     f.write(directory_structure)
