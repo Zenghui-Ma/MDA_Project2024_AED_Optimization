@@ -29,30 +29,30 @@ python -m pip install -r requirements.txt
 ├── app1.py
 ├── app2.py
 ├── app3.py
-├── assets
+├── assets 
 │   ├── aed_new.png
 │   ├── aed_new.webp
 │   ├── aed_old.png
 │   ├── green_person.png
 │   ├── red_person.png
 │   └── slider.css
-├── data
+├── data   # data files
 │   ├── AED_locations.xlsx
 │   ├── hospitals.xlsx
 │   ├── intervention_all.xlsx
 │   └── intervention_all0528.xlsx
 ├── find_nearest_aed_center.py
-├── fonts
-├── machinelearning_model
+├── fonts # fonts files
+├── machinelearning_model 
 │   └── kmeans_model.pkl
-├── model.py
-├── mortality_with_new_AED.py
-├── page1.py
-├── pages
-├── preprocess
+├── model.py 
+├── mortality_with_new_AED.py 
+├── page1.py 
+├── pages 
+├── preprocess # pre-processing and model-building files
 │   ├── Building_model.ipynb
 │   └── preprocessing.ipynb
-├── structure.txt
+├── structure.txt  # repository structure
 ├── temp.py
 └── test.ipynb
 
